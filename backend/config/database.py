@@ -41,9 +41,8 @@ class Config:
     JWT_ACCESS_TOKEN_EXPIRES = 3600  # 1 hora
     
     # CORS Configuration
-    CORS_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000', 
-                   'http://localhost:8080', 'http://127.0.0.1:8080',
-                   'http://localhost:8086', 'http://127.0.0.1:8086']
+    CORS_ORIGINS = os.environ.get('CORS_ORIGINS', 
+                   'http://localhost:3000,http://127.0.0.1:3000,http://localhost:8080,http://127.0.0.1:8080,http://localhost:8086,http://127.0.0.1:8086').split(',')
 
 class DevelopmentConfig(Config):
     """Configurações para desenvolvimento"""
