@@ -8,6 +8,14 @@
   to = "https://gestao-indicadores-hospitalares-production.up.railway.app/:splat"
   status = 200
   force = true
+
+# Headers de segurança relaxados para permitir funcionamento
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' https: data:; img-src 'self' https: data:; connect-src 'self' https:;"
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
   
 # SPA redirect
 [[redirects]]
