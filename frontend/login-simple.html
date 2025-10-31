@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Gestão Hospitalares</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-card {
+            max-width: 400px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        .card-content {
+            padding: 40px 30px;
+        }
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .auth-header i {
+            color: #2196F3;
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .auth-header h4 {
+            color: #333;
+            margin: 0;
+            font-weight: 600;
+        }
+        .btn-login {
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 25px;
+            text-transform: none;
+            font-weight: 500;
+        }
+        .error-message {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="card login-card">
+        <div class="card-content">
+            <div class="auth-header">
+                <i class="material-icons">local_hospital</i>
+                <h4>Login</h4>
+                <p>Gestão de Indicadores Hospitalares</p>
+            </div>
+            
+            <form id="login-form">
+                <div class="input-field">
+                    <i class="material-icons prefix">email</i>
+                    <input id="email" type="email" required>
+                    <label for="email">Email</label>
+                </div>
+                
+                <div class="input-field">
+                    <i class="material-icons prefix">lock</i>
+                    <input id="password" type="password" required>
+                    <label for="password">Senha</label>
+                </div>
+                
+                <button type="submit" class="btn blue btn-login waves-effect waves-light">
+                    <i class="material-icons left">login</i>
+                    Entrar
+                </button>
+                
+                <div id="error-message" class="error-message" style="display: none;"></div>
+            </form>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <p>Não tem conta? <a href="#" onclick="showRegister()">Cadastre-se</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        // Configuração da API
+        const API_URL = 'https://gestao-indicadores-hospitalares-production.up.railway.app';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar Materialize
+            M.AutoInit();
+            
+            // Login form
+            document.getElementById('login-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const errorDiv = document.getElementById('error-message');
+                
+                try {
+                    const response = await fetch(`${API_URL}/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        
+                        // Redirecionar para o sistema principal
+                        window.location.href = 'index.html';
+                    } else {
+                        errorDiv.textContent = data.message || 'Erro no login';
+                        errorDiv.style.display = 'block';
+                    }
+                } catch (error) {
+                    errorDiv.textContent = 'Erro de conexão com o servidor';
+                    errorDiv.style.display = 'block';
+                    console.error('Erro:', error);
+                }
+            });
+        });
+        
+        function showRegister() {
+            alert('Funcionalidade de cadastro em desenvolvimento');
+        }
+        
+        // Teste de conexão com API
+        fetch(`${API_URL}/health`)
+            .then(response => response.json())
+            .then(data => console.log('✅ API conectada:', data))
+            .catch(error => console.error('❌ Erro na API:', error));
+    </script>
+</body>
+</html>
