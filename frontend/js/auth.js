@@ -120,6 +120,8 @@ class AuthManager {
 
     async handleCadastro(event) {
         event.preventDefault();
+        
+        console.log('🔄 Iniciando processo de cadastro...');
 
         const formData = {
             nome: document.getElementById('cadastro-nome').value,
@@ -131,6 +133,8 @@ class AuthManager {
             role: 'operador' // Padrão para novos usuários
         };
 
+        console.log('📝 Dados do formulário:', formData);
+
         // Validações
         if (!this.validateCadastroForm(formData)) {
             return;
@@ -140,7 +144,11 @@ class AuthManager {
             // Remover confirmPassword antes de enviar para API
             const { confirmPassword, ...apiData } = formData;
             
+            console.log('📡 Enviando para API:', apiData);
+            
             const result = await window.APP_CONFIG.ApiUtils.post('/auth/register', apiData);
+            
+            console.log('✅ Resposta da API:', result);
             
             if (result.token && result.user) {
                 this.showSuccess('Cadastro realizado com sucesso! Redirecionando...');
@@ -151,18 +159,22 @@ class AuthManager {
                 localStorage.setItem('authToken', result.token);
                 
                 setTimeout(() => this.showMainApp(), 2000);
-            } else {
+            } else if (result.message && result.message.includes('sucesso')) {
                 this.showSuccess('Cadastro realizado com sucesso! Faça login para continuar.');
                 setTimeout(() => this.mostrarLogin(), 2000);
+            } else {
+                this.showError(result.message || 'Erro no cadastro');
             }
             
         } catch (error) {
-            console.error('Erro no cadastro:', error);
+            console.error('❌ Erro no cadastro:', error);
             this.showError(error.message || 'Erro ao realizar cadastro');
         }
     }
 
     validateCadastroForm(data) {
+        console.log('🔍 Validando formulário:', data);
+        
         if (!data.nome.trim()) {
             this.showError('Nome é obrigatório');
             return false;
@@ -173,21 +185,22 @@ class AuthManager {
             return false;
         }
 
-        if (data.password.length < 6) {
+        if (data.senha.length < 6) {
             this.showError('Senha deve ter pelo menos 6 caracteres');
             return false;
         }
 
-        if (data.password !== data.confirmPassword) {
+        if (data.senha !== data.confirmPassword) {
             this.showError('Senhas não coincidem');
             return false;
         }
 
-        if (!data.unidade) {
+        if (!data.unidade_id || isNaN(data.unidade_id)) {
             this.showError('Selecione uma unidade');
             return false;
         }
 
+        console.log('✅ Validação passou!');
         return true;
     }
 

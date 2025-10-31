@@ -42,6 +42,8 @@ const ApiUtils = {
     },
 
     async post(endpoint, data) {
+        console.log(`📡 POST ${API_CONFIG.baseURL}${endpoint}`, data);
+        
         const token = localStorage.getItem('token');
         const response = await fetch(`${API_CONFIG.baseURL}${endpoint}`, {
             method: 'POST',
@@ -51,7 +53,15 @@ const ApiUtils = {
             },
             body: JSON.stringify(data)
         });
-        return await response.json();
+        
+        const result = await response.json();
+        console.log(`📡 Response ${response.status}:`, result);
+        
+        if (!response.ok) {
+            throw new Error(result.message || `HTTP ${response.status}`);
+        }
+        
+        return result;
     },
 
     async put(endpoint, data) {
