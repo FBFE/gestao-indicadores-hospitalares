@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Hospitalar - Teste</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .main-card {
+            max-width: 500px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        .card-content {
+            padding: 40px 30px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header i {
+            color: #2196F3;
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .btn-custom {
+            width: 100%;
+            margin: 10px 0;
+            border-radius: 25px;
+            text-transform: none;
+            font-weight: 500;
+        }
+        .login-section, .register-section, .main-section {
+            display: none;
+        }
+        .login-section.active, .register-section.active, .main-section.active {
+            display: block;
+        }
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        .success { background: #c8e6c9; color: #2e7d32; }
+        .error { background: #ffcdd2; color: #c62828; }
+    </style>
+</head>
+<body>
+    <div class="card main-card">
+        <div class="card-content">
+            <!-- Seção de Login -->
+            <div class="login-section active">
+                <div class="header">
+                    <i class="material-icons">local_hospital</i>
+                    <h4>Login</h4>
+                    <p>Gestão de Indicadores Hospitalares</p>
+                </div>
+                
+                <form id="login-form">
+                    <div class="input-field">
+                        <i class="material-icons prefix">email</i>
+                        <input id="login-email" type="email" value="admin@hospital.com" required>
+                        <label for="login-email" class="active">Email</label>
+                    </div>
+                    
+                    <div class="input-field">
+                        <i class="material-icons prefix">lock</i>
+                        <input id="login-password" type="password" value="admin123" required>
+                        <label for="login-password" class="active">Senha</label>
+                    </div>
+                    
+                    <button type="submit" class="btn blue btn-custom waves-effect waves-light">
+                        <i class="material-icons left">login</i>
+                        Entrar
+                    </button>
+                </form>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <p>Não tem conta? <a href="#" onclick="showRegister()">Cadastre-se</a></p>
+                </div>
+                
+                <div id="login-message"></div>
+            </div>
+
+            <!-- Seção de Registro -->
+            <div class="register-section">
+                <div class="header">
+                    <i class="material-icons">person_add</i>
+                    <h4>Cadastro</h4>
+                </div>
+                
+                <form id="register-form">
+                    <div class="input-field">
+                        <i class="material-icons prefix">person</i>
+                        <input id="reg-nome" type="text" required>
+                        <label for="reg-nome">Nome</label>
+                    </div>
+                    
+                    <div class="input-field">
+                        <i class="material-icons prefix">email</i>
+                        <input id="reg-email" type="email" required>
+                        <label for="reg-email">Email</label>
+                    </div>
+                    
+                    <div class="input-field">
+                        <i class="material-icons prefix">lock</i>
+                        <input id="reg-senha" type="password" required>
+                        <label for="reg-senha">Senha</label>
+                    </div>
+                    
+                    <div class="input-field">
+                        <i class="material-icons prefix">lock_outline</i>
+                        <input id="reg-confirm" type="password" required>
+                        <label for="reg-confirm">Confirmar Senha</label>
+                    </div>
+                    
+                    <div class="input-field">
+                        <select id="reg-unidade" required>
+                            <option value="" disabled selected>Escolha uma unidade</option>
+                            <option value="1">Cardiologia</option>
+                            <option value="2">Pediatria</option>
+                            <option value="3">Neurologia</option>
+                            <option value="4">Ortopedia</option>
+                        </select>
+                        <label>Unidade</label>
+                    </div>
+                    
+                    <button type="submit" class="btn green btn-custom waves-effect waves-light">
+                        <i class="material-icons left">person_add</i>
+                        Cadastrar
+                    </button>
+                </form>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <p>Já tem conta? <a href="#" onclick="showLogin()">Faça login</a></p>
+                </div>
+                
+                <div id="register-message"></div>
+            </div>
+
+            <!-- Seção Principal -->
+            <div class="main-section">
+                <div class="header">
+                    <i class="material-icons">dashboard</i>
+                    <h4>Dashboard</h4>
+                    <p>Bem-vindo, <span id="user-name">Usuário</span>!</p>
+                </div>
+                
+                <div class="center-align">
+                    <p>✅ Sistema funcionando corretamente!</p>
+                    <p>🏥 Gestão de Indicadores Hospitalares</p>
+                    
+                    <button onclick="logout()" class="btn red btn-custom waves-effect waves-light">
+                        <i class="material-icons left">exit_to_app</i>
+                        Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        // Configuração
+        const API_URL = 'https://gestao-indicadores-hospitalares-production.up.railway.app';
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            M.AutoInit();
+            console.log('✅ Sistema iniciado!');
+            
+            // Verificar se já está logado
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                showMain();
+            }
+        });
+        
+        // Login
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            console.log('🔄 Tentando fazer login...');
+            
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                console.log('📡 Resposta login:', data);
+                
+                if (response.ok && data.token) {
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    showMessage('login-message', 'Login realizado com sucesso!', 'success');
+                    setTimeout(showMain, 1000);
+                } else {
+                    showMessage('login-message', data.message || 'Erro no login', 'error');
+                }
+            } catch (error) {
+                console.error('❌ Erro login:', error);
+                showMessage('login-message', 'Erro de conexão', 'error');
+            }
+        });
+        
+        // Registro
+        document.getElementById('register-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const nome = document.getElementById('reg-nome').value;
+            const email = document.getElementById('reg-email').value;
+            const senha = document.getElementById('reg-senha').value;
+            const confirm = document.getElementById('reg-confirm').value;
+            const unidade_id = parseInt(document.getElementById('reg-unidade').value);
+            
+            if (senha !== confirm) {
+                showMessage('register-message', 'Senhas não coincidem', 'error');
+                return;
+            }
+            
+            console.log('🔄 Tentando cadastrar...');
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nome, email, senha, unidade_id, role: 'operador' })
+                });
+                
+                const data = await response.json();
+                console.log('📡 Resposta cadastro:', data);
+                
+                if (response.ok) {
+                    showMessage('register-message', 'Cadastro realizado com sucesso!', 'success');
+                    setTimeout(showLogin, 2000);
+                } else {
+                    showMessage('register-message', data.message || 'Erro no cadastro', 'error');
+                }
+            } catch (error) {
+                console.error('❌ Erro cadastro:', error);
+                showMessage('register-message', 'Erro de conexão', 'error');
+            }
+        });
+        
+        // Funções de navegação
+        function showLogin() {
+            document.querySelector('.login-section').classList.add('active');
+            document.querySelector('.register-section').classList.remove('active');
+            document.querySelector('.main-section').classList.remove('active');
+        }
+        
+        function showRegister() {
+            document.querySelector('.login-section').classList.remove('active');
+            document.querySelector('.register-section').classList.add('active');
+            document.querySelector('.main-section').classList.remove('active');
+            M.AutoInit(); // Reinicializar selects
+        }
+        
+        function showMain() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            document.getElementById('user-name').textContent = user.nome || 'Usuário';
+            
+            document.querySelector('.login-section').classList.remove('active');
+            document.querySelector('.register-section').classList.remove('active');
+            document.querySelector('.main-section').classList.add('active');
+        }
+        
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            showLogin();
+        }
+        
+        function showMessage(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="message ${type}">${message}</div>`;
+            setTimeout(() => element.innerHTML = '', 5000);
+        }
+        
+        // Teste de conexão
+        fetch(`${API_URL}/health`)
+            .then(response => response.json())
+            .then(data => console.log('✅ API conectada:', data))
+            .catch(error => console.error('❌ Erro na API:', error));
+    </script>
+</body>
+</html>
