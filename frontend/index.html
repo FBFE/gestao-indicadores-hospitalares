@@ -172,8 +172,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-        // Configuração
-        const API_URL = 'https://gestao-indicadores-hospitalares-production.up.railway.app';
+        // Configuração usando proxy do Netlify (sem CSP)
+        const API_URL = '/api';
         
         // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
@@ -197,17 +197,17 @@
             console.log('🔄 Tentando fazer login...');
             
             try {
-                const response = await fetch(`${API_URL}/login`, {
+                const response = await fetch(`${API_URL}/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ email, senha: password })
                 });
                 
                 const data = await response.json();
                 console.log('📡 Resposta login:', data);
                 
-                if (response.ok && data.token) {
-                    localStorage.setItem('authToken', data.token);
+                if (response.ok && data.access_token) {
+                    localStorage.setItem('authToken', data.access_token);
                     localStorage.setItem('user', JSON.stringify(data.user));
                     showMessage('login-message', 'Login realizado com sucesso!', 'success');
                     setTimeout(showMain, 1000);
@@ -220,43 +220,10 @@
             }
         });
         
-        // Registro
+        // Registro - Temporariamente desabilitado
         document.getElementById('register-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            const nome = document.getElementById('reg-nome').value;
-            const email = document.getElementById('reg-email').value;
-            const senha = document.getElementById('reg-senha').value;
-            const confirm = document.getElementById('reg-confirm').value;
-            const unidade_id = parseInt(document.getElementById('reg-unidade').value);
-            
-            if (senha !== confirm) {
-                showMessage('register-message', 'Senhas não coincidem', 'error');
-                return;
-            }
-            
-            console.log('🔄 Tentando cadastrar...');
-            
-            try {
-                const response = await fetch(`${API_URL}/auth/register`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nome, email, senha, unidade_id, role: 'operador' })
-                });
-                
-                const data = await response.json();
-                console.log('📡 Resposta cadastro:', data);
-                
-                if (response.ok) {
-                    showMessage('register-message', 'Cadastro realizado com sucesso!', 'success');
-                    setTimeout(showLogin, 2000);
-                } else {
-                    showMessage('register-message', data.message || 'Erro no cadastro', 'error');
-                }
-            } catch (error) {
-                console.error('❌ Erro cadastro:', error);
-                showMessage('register-message', 'Erro de conexão', 'error');
-            }
+            showMessage('register-message', 'Funcionalidade em desenvolvimento. Use o login admin@hospital.com / admin123', 'error');
         });
         
         // Funções de navegação
