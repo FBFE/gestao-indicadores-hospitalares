@@ -22,19 +22,43 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def create_app(config_name='default'):
+def create_app(config_name=None):
     """Factory function para criar a aplicação Flask"""
     app = Flask(__name__)
     
-    # Carreguar configurações
-    app.config.from_object(config[config_name])
+    # Configuração simplificada para produção
+    if config_name == 'production' or os.environ.get('FLASK_ENV') == 'production':
+        app.config['DEBUG'] = False
+        app.config['TESTING'] = False
+        app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
+        app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', app.config['SECRET_KEY'])
+        app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 3600
+        
+        # Database URL
+        database_url = os.environ.get('DATABASE_URL')
+        if database_url and database_url.startswith('postgres://'):
+            database_url = database_url.replace('postgres://', 'postgresql://', 1)
+        app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        
+        # CORS
+        cors_origins = os.environ.get('CORS_ORIGINS', '*')
+        if cors_origins == '*':
+            app.config['CORS_ORIGINS'] = '*'
+        else:
+            app.config['CORS_ORIGINS'] = cors_origins.split(',')
+    else:
+        # Desenvolvimento
+        from config.database import config
+        app.config.from_object(config[config_name or 'development'])
     
     # Configurar extensões
     db.init_app(app)
     jwt = JWTManager(app)
     
     # Configurar CORS
-    CORS(app, supports_credentials=True, origins=app.config['CORS_ORIGINS'])
+    cors_origins = app.config.get('CORS_ORIGINS', '*')
+    CORS(app, supports_credentials=True, origins=cors_origins if cors_origins != '*' else True)
     
     # Decorador para verificar roles
     def role_required(roles):
@@ -401,7 +425,7 @@ def create_app(config_name='default'):
     return app
 
 # Criar aplicação
-app = create_app(os.environ.get('FLASK_ENV', 'development'))
+app = create_app('production' if os.environ.get('FLASK_ENV') == 'production' else 'development')
 
 if __name__ == '__main__':
     with app.app_context():
@@ -412,12 +436,57 @@ if __name__ == '__main__':
             
             # Popular dados iniciais se necessário
             if not Usuario.query.first():
-                from database.manage_db import init_database
-                init_database()
-                logger.info("Dados iniciais populados")
+                logger.info("Criando dados iniciais...")
+                
+                # Criar unidades
+                unidades = [
+                    Unidade(nome="UTI Geral", descricao="Unidade de Terapia Intensiva Geral", ativo=True),
+                    Unidade(nome="UTI Cardiológica", descricao="UTI especializada em cardiologia", ativo=True),
+                    Unidade(nome="Pronto Socorro", descricao="Atendimento de emergência", ativo=True),
+                    Unidade(nome="Enfermaria Clínica", descricao="Internação clínica geral", ativo=True),
+                    Unidade(nome="Centro Cirúrgico", descricao="Bloco cirúrgico", ativo=True)
+                ]
+                
+                for unidade in unidades:
+                    db.session.add(unidade)
+                
+                db.session.commit()
+                
+                # Criar usuários
+                usuarios = [
+                    Usuario(
+                        email="admin@hospital.com",
+                        nome="Administrador",
+                        role="admin",
+                        unidade_id=1,
+                        ativo=True
+                    ),
+                    Usuario(
+                        email="gestor@hospital.com",
+                        nome="Gestor Hospitalar",
+                        role="gestor",
+                        unidade_id=1,
+                        ativo=True
+                    ),
+                    Usuario(
+                        email="operador@hospital.com",
+                        nome="Operador UTI",
+                        role="operador",
+                        unidade_id=1,
+                        ativo=True
+                    )
+                ]
+                
+                for usuario in usuarios:
+                    usuario.definir_senha("admin123")
+                    db.session.add(usuario)
+                
+                db.session.commit()
+                logger.info("Dados iniciais criados com sucesso!")
                 
         except Exception as e:
             logger.error(f"Erro na inicialização do banco: {e}")
+            # Não falhar por causa disso
     
     port = int(os.environ.get('PORT', 5000))
     app.run(
