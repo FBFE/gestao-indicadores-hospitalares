@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Indicadores Hospitalares</title>
+    
+    <!-- Material Design CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --primary-color-dark: #5a6fd8;
+            --secondary-color: #764ba2;
+            --text-color: #333;
+            --text-color-secondary: #666;
+            --background-color: #f8f9fa;
+            --border-color: #e1e5e9;
+            --border-radius-sm: 6px;
+            --border-radius-md: 10px;
+            --border-radius-lg: 15px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-wrapper {
+            position: relative;
+            z-index: 1001;
+        }
+
+        .brand-logo {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-logo i {
+            margin-right: 8px;
+        }
+
+        /* User dropdown */
+        .user-dropdown .dropdown-trigger {
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            color: white;
+        }
+
+        .user-info-item {
+            padding: 1rem !important;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 0.8rem;
+            color: var(--text-color-secondary);
+        }
+
+        .user-unit {
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* Main content */
+        main {
+            margin-top: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .dashboard-cards {
+            margin-top: 20px;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: var(--border-radius-md);
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .stats-card .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .stats-card h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stats-card p {
+            color: var(--text-color-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Welcome section */
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border-radius: var(--border-radius-md);
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .welcome-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Quick actions */
+        .quick-actions {
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius-md);
+            padding: 15px 25px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .action-btn i {
+            margin-right: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo">
+                <i class="material-icons">local_hospital</i>
+                Gestão de Indicadores
+            </a>
+            
+            <ul class="right hide-on-med-and-down">
+                <li>
+                    <a class="dropdown-trigger user-dropdown" href="#!" data-target="user-dropdown">
+                        <i class="material-icons left">account_circle</i>
+                        <span id="user-name">Usuário</span>
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+            </ul>
+            
+            <!-- User Dropdown -->
+            <ul id="user-dropdown" class="dropdown-content">
+                <li>
+                    <a href="#!" class="user-info-item">
+                        <i class="material-icons left">person</i>
+                        <div>
+                            <div class="user-name" id="dropdown-user-name">Nome do Usuário</div>
+                            <div class="user-role" id="dropdown-user-role">Operador</div>
+                            <div class="user-unit" id="dropdown-user-unit">Unidade</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="#!" onclick="logout()">
+                        <i class="material-icons left">exit_to_app</i>Sair
+                    </a>
+                </li>
+            </ul>
+            
+            <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+                <i class="material-icons">menu</i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <ul class="sidenav" id="mobile-nav">
+        <li>
+            <div class="user-view">
+                <div class="background" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);"></div>
+                <a href="#user">
+                    <img class="circle" src="https://via.placeholder.com/64/667eea/ffffff?text=U">
+                </a>
+                <a href="#name">
+                    <span class="white-text name" id="mobile-user-name">Usuário</span>
+                </a>
+                <a href="#unit">
+                    <span class="white-text email" id="mobile-user-unit">Unidade</span>
+                </a>
+            </div>
+        </li>
+        <li><a href="#dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
+        <li><a href="#lancamentos"><i class="material-icons">add_circle</i>Lançamentos</a></li>
+        <li><div class="divider"></div></li>
+        <li><a href="#!" onclick="logout()"><i class="material-icons">exit_to_app</i>Sair</a></li>
+    </ul>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <h1>Bem-vindo(a), <span id="welcome-user-name">Usuário</span>!</h1>
+                <p>Sistema de Gestão de Indicadores Hospitalares</p>
+                <p><strong id="welcome-user-unit">Unidade</strong> • <span id="welcome-user-role">Operador</span></p>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions center-align">
+                <h4>Ações Rápidas</h4>
+                <div>
+                    <a href="#" class="action-btn">
+                        <i class="material-icons">add_circle</i>
+                        Novo Lançamento
+                    </a>
+                    <a href="#" class="action-btn">
+                        <i class="material-icons">assessment</i>
+                        Ver Relatórios
+                    </a>
+                    <a href="#" class="action-btn">
+                        <i class="material-icons">timeline</i>
+                        Dashboard
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row dashboard-cards">
+                <div class="col s12 m6 l3">
+                    <div class="stats-card center-align">
+                        <i class="material-icons card-icon" style="color: #4CAF50;">trending_up</i>
+                        <h3>15</h3>
+                        <p>Lançamentos este mês</p>
+                    </div>
+                </div>
+                <div class="col s12 m6 l3">
+                    <div class="stats-card center-align">
+                        <i class="material-icons card-icon" style="color: #2196F3;">assessment</i>
+                        <h3>8</h3>
+                        <p>Indicadores ativos</p>
+                    </div>
+                </div>
+                <div class="col s12 m6 l3">
+                    <div class="stats-card center-align">
+                        <i class="material-icons card-icon" style="color: #FF9800;">schedule</i>
+                        <h3>3</h3>
+                        <p>Pendências</p>
+                    </div>
+                </div>
+                <div class="col s12 m6 l3">
+                    <div class="stats-card center-align">
+                        <i class="material-icons card-icon" style="color: #9C27B0;">local_hospital</i>
+                        <h3 id="stats-unit-name">UTI</h3>
+                        <p>Sua unidade</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Section -->
+            <div class="row" style="margin-top: 40px;">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">
+                                <i class="material-icons left">info</i>
+                                Sistema Funcionando
+                            </span>
+                            <p>🎉 Parabéns! O sistema de autenticação e a aplicação principal estão funcionando corretamente.</p>
+                            <p><strong>Recursos implementados:</strong></p>
+                            <ul style="margin-left: 20px;">
+                                <li>✅ Login e cadastro de usuários</li>
+                                <li>✅ Controle de acesso por roles (operador, gestor, admin)</li>
+                                <li>✅ Filtros por unidade hospitalar</li>
+                                <li>✅ Interface responsiva e moderna</li>
+                                <li>✅ Sistema de autenticação JWT</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+    <script>
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🏥 Aplicação principal carregada com sucesso!');
+            
+            // Inicializar componentes Materialize
+            M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {
+                coverTrigger: false,
+                constrainWidth: false
+            });
+            
+            M.Sidenav.init(document.querySelectorAll('.sidenav'));
+            
+            // Carregar dados do usuário
+            loadUserData();
+        });
+
+        function loadUserData() {
+            try {
+                const userData = JSON.parse(localStorage.getItem('currentUser'));
+                
+                if (userData) {
+                    // Atualizar nome do usuário
+                    document.getElementById('user-name').textContent = userData.nome;
+                    document.getElementById('dropdown-user-name').textContent = userData.nome;
+                    document.getElementById('mobile-user-name').textContent = userData.nome;
+                    document.getElementById('welcome-user-name').textContent = userData.nome;
+                    
+                    // Atualizar role
+                    const roleNames = {
+                        'operador': 'Operador',
+                        'gestor': 'Gestor',
+                        'admin': 'Administrador'
+                    };
+                    const roleName = roleNames[userData.role] || userData.role;
+                    document.getElementById('dropdown-user-role').textContent = roleName;
+                    document.getElementById('welcome-user-role').textContent = roleName;
+                    
+                    // Atualizar unidade
+                    document.getElementById('dropdown-user-unit').textContent = userData.unidade;
+                    document.getElementById('mobile-user-unit').textContent = userData.unidade;
+                    document.getElementById('welcome-user-unit').textContent = userData.unidade;
+                    document.getElementById('stats-unit-name').textContent = userData.unidade;
+                    
+                    console.log('✅ Dados do usuário carregados:', userData);
+                } else {
+                    console.warn('⚠️ Nenhum usuário logado encontrado');
+                    // Redirecionar para login se não houver usuário
+                    window.location.href = 'login-simples.html';
+                }
+            } catch (error) {
+                console.error('❌ Erro ao carregar dados do usuário:', error);
+                window.location.href = 'login-simples.html';
+            }
+        }
+
+        function logout() {
+            // Limpar dados salvos
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('authToken');
+            
+            // Mostrar toast de confirmação
+            M.toast({
+                html: '<i class="material-icons left">check_circle</i>Logout realizado com sucesso!',
+                classes: 'green darken-2',
+                displayLength: 2000
+            });
+            
+            // Redirecionar para login
+            setTimeout(() => {
+                window.location.href = 'login-simples.html';
+            }, 1000);
+        }
+
+        // Toast de boas-vindas
+        setTimeout(() => {
+            M.toast({
+                html: '<i class="material-icons left">thumb_up</i>Sistema carregado com sucesso!',
+                classes: 'green darken-2',
+                displayLength: 3000
+            });
+        }, 1000);
+    </script>
+</body>
+</html>

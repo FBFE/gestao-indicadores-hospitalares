@@ -1,0 +1,97 @@
+# Arquivos e pastas do ambiente virtual Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos do sistema operacional
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos de build
+dist/
+build/
+
+# Credenciais e chaves sensíveis
+credentials.json
+service-account-key.json
+*.pem
+*.key
+
+# Cache e arquivos temporários
+.cache/
+.tmp/
+.temp/
+
+# Arquivos de sessão Flask
+flask_session/
+instance/
+
+# Arquivos de backup
+*.bak
+*.backup
+*.old
+
+# Arquivos de teste
+.coverage
+.pytest_cache/
+.tox/
+.nox/
+
+# Arquivos específicos do projeto
+uploads/
+static/uploads/
+
+# Netlify
+.netlify/
+
+# Heroku
+Procfile.local

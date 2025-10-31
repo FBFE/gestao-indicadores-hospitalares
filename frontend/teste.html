@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Gestão de Indicadores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 50px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #5a6fd8; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h2>🏥 Teste de Diagnóstico</h2>
+        <div id="tests"></div>
+        <button onclick="runTests()">Executar Testes</button>
+        <button onclick="goToMain()">Ir para Aplicação Principal</button>
+    </div>
+
+    <script>
+        function addResult(message, type) {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = message;
+            document.getElementById('tests').appendChild(div);
+        }
+
+        function runTests() {
+            document.getElementById('tests').innerHTML = '';
+            
+            // Teste 1: DOM
+            addResult('✅ DOM carregado corretamente', 'success');
+            
+            // Teste 2: Console
+            console.log('🧪 Teste de console funcionando');
+            addResult('✅ Console funcionando', 'success');
+            
+            // Teste 3: LocalStorage
+            try {
+                localStorage.setItem('test', 'ok');
+                localStorage.removeItem('test');
+                addResult('✅ LocalStorage funcionando', 'success');
+            } catch (e) {
+                addResult('❌ LocalStorage com problemas: ' + e.message, 'error');
+            }
+            
+            // Teste 4: Fetch API
+            if (typeof fetch !== 'undefined') {
+                addResult('✅ Fetch API disponível', 'success');
+            } else {
+                addResult('❌ Fetch API não disponível', 'error');
+            }
+            
+            // Teste 5: URLs
+            const baseUrl = window.location.origin;
+            addResult(`📍 URL base: ${baseUrl}`, 'warning');
+            
+            addResult('🎯 Testes concluídos! Se tudo estiver verde, o problema pode estar nos arquivos CSS/JS.', 'warning');
+        }
+
+        function goToMain() {
+            window.location.href = 'index.html';
+        }
+
+        // Auto-executar testes
+        document.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>

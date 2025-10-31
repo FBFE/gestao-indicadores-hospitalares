@@ -1,0 +1,1 @@
+web: cd src && python app_postgresql.py --bind 0.0.0.0:$PORT --workers 3

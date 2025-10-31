@@ -1,0 +1,281 @@
+{
+  "backup_date": "2025-10-31T09:22:40.700250",
+  "database": "gestao_indicadores",
+  "tables": {
+    "unidades": {
+      "columns": [
+        "id",
+        "nome",
+        "codigo",
+        "ativo",
+        "criado_em"
+      ],
+      "rows": [
+        {
+          "id": 1,
+          "nome": "UTI Geral",
+          "codigo": "UTI_GERAL",
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.373930"
+        },
+        {
+          "id": 2,
+          "nome": "UTI Coronariana",
+          "codigo": "UTI_CORONARIANA",
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375241"
+        },
+        {
+          "id": 3,
+          "nome": "UTI Pediátrica",
+          "codigo": "UTI_PEDIATRICA",
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375277"
+        },
+        {
+          "id": 4,
+          "nome": "UTI Neonatal",
+          "codigo": "UTI_NEONATAL",
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375286"
+        },
+        {
+          "id": 5,
+          "nome": "Centro Cirúrgico",
+          "codigo": "CENTRO_CIRURGICO",
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375293"
+        },
+        {
+          "id": 6,
+          "nome": "Emergência",
+          "codigo": "EMERGENCIA",
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375299"
+        },
+        {
+          "id": 7,
+          "nome": "Pronto Socorro",
+          "codigo": "PRONTO_SOCORRO",
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375305"
+        },
+        {
+          "id": 8,
+          "nome": "Internação Clínica",
+          "codigo": "INTERNACAO_CLINICA",
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375311"
+        },
+        {
+          "id": 9,
+          "nome": "Internação Cirúrgica",
+          "codigo": "INTERNACAO_CIRURGICA",
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375317"
+        },
+        {
+          "id": 10,
+          "nome": "Pediatria",
+          "codigo": "PEDIATRIA",
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375322"
+        },
+        {
+          "id": 11,
+          "nome": "Maternidade",
+          "codigo": "MATERNIDADE",
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375328"
+        },
+        {
+          "id": 12,
+          "nome": "Ambulatório",
+          "codigo": "AMBULATORIO",
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375334"
+        }
+      ],
+      "count": 12
+    },
+    "indicadores": {
+      "columns": [
+        "id",
+        "nome",
+        "descricao",
+        "tipo",
+        "unidade_medida",
+        "meta_mensal",
+        "ativo",
+        "criado_em"
+      ],
+      "rows": [
+        {
+          "id": 1,
+          "nome": "Taxa de Ocupação",
+          "descricao": "Percentual de ocupação de leitos",
+          "tipo": "produtividade",
+          "unidade_medida": "percentual",
+          "meta_mensal": 85,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375445"
+        },
+        {
+          "id": 2,
+          "nome": "Tempo Médio de Permanência",
+          "descricao": "Tempo médio de permanência em dias",
+          "tipo": "eficiencia",
+          "unidade_medida": "dias",
+          "meta_mensal": 7,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375544"
+        },
+        {
+          "id": 3,
+          "nome": "Taxa de Mortalidade",
+          "descricao": "Taxa de mortalidade hospitalar",
+          "tipo": "qualidade",
+          "unidade_medida": "percentual",
+          "meta_mensal": 2,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375555"
+        },
+        {
+          "id": 4,
+          "nome": "Taxa de Infecção Hospitalar",
+          "descricao": "Taxa de infecção hospitalar",
+          "tipo": "seguranca",
+          "unidade_medida": "percentual",
+          "meta_mensal": 5,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375562"
+        },
+        {
+          "id": 5,
+          "nome": "Satisfação do Paciente",
+          "descricao": "Índice de satisfação do paciente",
+          "tipo": "qualidade",
+          "unidade_medida": "nota",
+          "meta_mensal": 8.5,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375630"
+        },
+        {
+          "id": 6,
+          "nome": "Rotatividade de Leitos",
+          "descricao": "Número de vezes que o leito foi ocupado",
+          "tipo": "produtividade",
+          "unidade_medida": "numero",
+          "meta_mensal": 3,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375649"
+        },
+        {
+          "id": 7,
+          "nome": "Taxa de Reinternação",
+          "descricao": "Taxa de reinternação em 30 dias",
+          "tipo": "qualidade",
+          "unidade_medida": "percentual",
+          "meta_mensal": 10,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375656"
+        },
+        {
+          "id": 8,
+          "nome": "Cancelamento de Cirurgias",
+          "descricao": "Taxa de cancelamento de cirurgias",
+          "tipo": "eficiencia",
+          "unidade_medida": "percentual",
+          "meta_mensal": 5,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375662"
+        },
+        {
+          "id": 9,
+          "nome": "Tempo de Espera Emergência",
+          "descricao": "Tempo médio de espera na emergência",
+          "tipo": "eficiencia",
+          "unidade_medida": "minutos",
+          "meta_mensal": 60,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375669"
+        },
+        {
+          "id": 10,
+          "nome": "Adesão à Higienização",
+          "descricao": "Taxa de adesão à higienização das mãos",
+          "tipo": "seguranca",
+          "unidade_medida": "percentual",
+          "meta_mensal": 95,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.375678"
+        }
+      ],
+      "count": 10
+    },
+    "usuarios": {
+      "columns": [
+        "id",
+        "nome",
+        "email",
+        "senha_hash",
+        "role",
+        "unidade_id",
+        "ativo",
+        "criado_em",
+        "ultimo_login"
+      ],
+      "rows": [
+        {
+          "id": 1,
+          "nome": "Administrador",
+          "email": "admin@hospital.com",
+          "senha_hash": "$2b$12$sWVH9yyXqmt1n3Jb0636Q.E3jfY5K5Lf4Q5bsX2Dwo1JfR7bzeIdu",
+          "role": "admin",
+          "unidade_id": 12,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.576720",
+          "ultimo_login": "2025-10-31 02:30:22.223446"
+        },
+        {
+          "id": 2,
+          "nome": "Gestor Teste",
+          "email": "gestor@hospital.com",
+          "senha_hash": "$2b$12$Hnrbq87/./M0ljefTuqG/uhH2wd0pQjlOMsqo9XKTyoqM.HfkAMwu",
+          "role": "gestor",
+          "unidade_id": 12,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.786621",
+          "ultimo_login": null
+        },
+        {
+          "id": 3,
+          "nome": "Operador Teste",
+          "email": "operador@hospital.com",
+          "senha_hash": "$2b$12$/QXpSvCyeglGimHs7Myu8O5sa7/NtgVyt45fcgYVaQzdfLSsHi0ge",
+          "role": "operador",
+          "unidade_id": 12,
+          "ativo": 1,
+          "criado_em": "2025-10-31 02:29:47.988413",
+          "ultimo_login": null
+        }
+      ],
+      "count": 3
+    },
+    "lancamentos": {
+      "columns": [
+        "id",
+        "indicador_id",
+        "unidade_id",
+        "usuario_id",
+        "ano",
+        "mes",
+        "valor",
+        "observacoes",
+        "criado_em"
+      ],
+      "rows": [],
+      "count": 0
+    }
+  }
+}

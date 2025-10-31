@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Indicadores Hospitalares</title>
+    
+    <!-- Material Design CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="material-icons">local_hospital</i>
+            </div>
+            <div class="loading-text">Carregando...</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Section -->
+    <div id="login-section" class="auth-section">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6 offset-m3 l4 offset-l4">
+                    <div class="card auth-card" data-aos="fade-up">
+                        <div class="card-content">
+                            <div class="auth-header">
+                                <i class="material-icons large">local_hospital</i>
+                                <h4>Login</h4>
+                                <p>Gestão de Indicadores Hospitalares</p>
+                            </div>
+                            
+                            <form id="login-form">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">email</i>
+                                    <input id="login-email" type="email" class="validate" required>
+                                    <label for="login-email">Email</label>
+                                    <span class="helper-text" data-error="Email inválido"></span>
+                                </div>
+                                
+                                <div class="input-field">
+                                    <i class="material-icons prefix">lock</i>
+                                    <input id="login-password" type="password" class="validate" required>
+                                    <label for="login-password">Senha</label>
+                                    <span class="helper-text" data-error="Senha obrigatória"></span>
+                                </div>
+                                
+                                <div class="auth-actions">
+                                    <button type="submit" class="btn btn-large waves-effect waves-light">
+                                        <i class="material-icons left">login</i>
+                                        Entrar
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div class="auth-switch">
+                                <p>Não tem conta? 
+                                    <a href="#" onclick="mostrarCadastro()">Cadastre-se</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cadastro Section -->
+    <div id="cadastro-section" class="auth-section" style="display: none;">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m8 offset-m2 l6 offset-l3">
+                    <div class="card auth-card" data-aos="fade-up">
+                        <div class="card-content">
+                            <div class="auth-header">
+                                <i class="material-icons large">person_add</i>
+                                <h4>Cadastro</h4>
+                                <p>Criar nova conta de operador</p>
+                            </div>
+                            
+                            <form id="cadastro-form">
+                                <div class="row">
+                                    <div class="input-field col s12 m6">
+                                        <i class="material-icons prefix">person</i>
+                                        <input id="cadastro-nome" type="text" class="validate" required>
+                                        <label for="cadastro-nome">Nome Completo</label>
+                                        <span class="helper-text" data-error="Nome obrigatório"></span>
+                                    </div>
+                                    
+                                    <div class="input-field col s12 m6">
+                                        <i class="material-icons prefix">email</i>
+                                        <input id="cadastro-email" type="email" class="validate" required>
+                                        <label for="cadastro-email">Email</label>
+                                        <span class="helper-text" data-error="Email inválido"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="input-field col s12 m6">
+                                        <i class="material-icons prefix">lock</i>
+                                        <input id="cadastro-password" type="password" class="validate" required minlength="6">
+                                        <label for="cadastro-password">Senha</label>
+                                        <span class="helper-text" data-error="Mínimo 6 caracteres"></span>
+                                    </div>
+                                    
+                                    <div class="input-field col s12 m6">
+                                        <i class="material-icons prefix">lock_outline</i>
+                                        <input id="cadastro-confirm-password" type="password" class="validate" required>
+                                        <label for="cadastro-confirm-password">Confirmar Senha</label>
+                                        <span class="helper-text" data-error="Senhas não coincidem"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">local_hospital</i>
+                                        <select id="cadastro-unidade" required>
+                                            <option value="" disabled selected>Selecione sua unidade</option>
+                                            <option value="UTI Adulto">UTI Adulto</option>
+                                            <option value="UTI Pediátrica">UTI Pediátrica</option>
+                                            <option value="UTI Neonatal">UTI Neonatal</option>
+                                            <option value="Emergência">Emergência</option>
+                                            <option value="Centro Cirúrgico">Centro Cirúrgico</option>
+                                            <option value="Clínica Médica">Clínica Médica</option>
+                                            <option value="Pediatria">Pediatria</option>
+                                            <option value="Maternidade">Maternidade</option>
+                                            <option value="Oncologia">Oncologia</option>
+                                            <option value="Cardiologia">Cardiologia</option>
+                                            <option value="Neurologia">Neurologia</option>
+                                            <option value="Ortopedia">Ortopedia</option>
+                                        </select>
+                                        <label>Unidade de Trabalho</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">badge</i>
+                                        <input id="cadastro-coren" type="text" class="validate">
+                                        <label for="cadastro-coren">COREN (opcional)</label>
+                                        <span class="helper-text">Número do registro profissional</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="auth-actions">
+                                    <button type="submit" class="btn btn-large waves-effect waves-light">
+                                        <i class="material-icons left">person_add</i>
+                                        Cadastrar
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div class="auth-switch">
+                                <p>Já tem conta? 
+                                    <a href="#" onclick="mostrarLogin()">Faça login</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application Container -->
+    <div id="main-app" style="display: none;">
+        <!-- Navigation -->
+        <nav class="nav-extended" data-aos="fade-down">
+            <div class="nav-wrapper container">
+                <a href="#" onclick="event.preventDefault(); navegarPara('dashboard');" class="brand-logo">
+                    <i class="material-icons left">local_hospital</i>
+                    Gestão de Indicadores
+                </a>
+                <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+                    <i class="material-icons">menu</i>
+                </a>
+                
+                <ul class="right hide-on-med-and-down">
+                    <li class="accessibility-controls">
+                        <div class="input-field">
+                            <select id="colorblind-mode">
+                                <option value="default" selected>Visão Padrão</option>
+                                <option value="colorblind-rg">Daltonismo (Vermelho-Verde)</option>
+                            <option value="colorblind-by">Daltonismo (Azul-Amarelo)</option>
+                        </select>
+                    </div>
+                    <div class="switch">
+                        <label>
+                            <i class="material-icons">wb_sunny</i>
+                            <input type="checkbox" id="dark-mode-toggle">
+                            <span class="lever"></span>
+                            <i class="material-icons">brightness_3</i>
+                        </label>
+                    </div>
+                </li>
+                <li><a href="#" onclick="event.preventDefault(); navegarPara('dashboard')" class="nav-link">
+                    <i class="material-icons left">dashboard</i>Dashboard
+                </a></li>
+                <li><a href="#" onclick="event.preventDefault(); navegarPara('lancamento')" class="nav-link">
+                    <i class="material-icons left">add_circle</i>Lançamento
+                </a></li>
+                <li class="admin-link" style="display:none;">
+                    <a href="#" onclick="event.preventDefault(); navegarPara('adminUnidades')" class="nav-link">
+                        <i class="material-icons left">business</i>Unidades
+                    </a>
+                </li>
+                <li class="admin-link" style="display:none;">
+                    <a href="#" onclick="event.preventDefault(); navegarPara('adminUsuarios')" class="nav-link">
+                        <i class="material-icons left">people</i>Usuários
+                    </a>
+                </li>
+                
+                <!-- User Info and Logout -->
+                <li class="user-info-dropdown">
+                    <a class="dropdown-trigger" href="#!" data-target="user-dropdown">
+                        <i class="material-icons left">account_circle</i>
+                        <span class="user-name">Usuário</span>
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+            </ul>
+            
+            <!-- User Dropdown -->
+            <ul id="user-dropdown" class="dropdown-content">
+                <li>
+                    <a href="#!" class="user-info-item">
+                        <i class="material-icons left">person</i>
+                        <span>
+                            <div class="user-name">Nome do Usuário</div>
+                            <div class="user-role">Operador</div>
+                            <div class="user-unit">Unidade</div>
+                        </span>
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="#!" onclick="logout()">
+                        <i class="material-icons left">exit_to_app</i>Sair
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <ul class="sidenav" id="mobile-nav">
+        <li>
+            <div class="user-view">
+                <div class="background gradient-bg"></div>
+                <a href="#user"><img class="circle" src="https://via.placeholder.com/64?text=User"></a>
+                <a href="#name"><span class="white-text name user-name">Usuário</span></a>
+                <a href="#email"><span class="white-text email user-unit">Unidade</span></a>
+            </div>
+        </li>
+        <li><a href="#" onclick="navegarPara('dashboard'); fecharSidenav();">
+            <i class="material-icons">dashboard</i>Dashboard
+        </a></li>
+        <li><a href="#" onclick="navegarPara('lancamento'); fecharSidenav();">
+            <i class="material-icons">add_circle</i>Lançamento em Lote
+        </a></li>
+        <li class="admin-link" style="display:none;">
+            <a href="#" onclick="navegarPara('adminUnidades'); fecharSidenav();">
+                <i class="material-icons">business</i>Gerenciar Unidades
+            </a>
+        </li>
+        <li class="admin-link" style="display:none;">
+            <a href="#" onclick="navegarPara('adminUsuarios'); fecharSidenav();">
+                <i class="material-icons">people</i>Gerenciar Usuários
+            </a>
+        </li>
+        
+        <li><div class="divider"></div></li>
+        <li><a class="subheader">Configurações</a></li>
+        <li>
+            <div class="switch mobile-switch">
+                <label>
+                    Modo Noturno
+                    <input type="checkbox" id="dark-mode-toggle-mobile">
+                    <span class="lever"></span>
+                </label>
+            </div>
+        </li>
+        <li>
+            <div class="input-field mobile-select">
+                <select id="colorblind-mode-mobile">
+                    <option value="default" selected>Visão Padrão</option>
+                    <option value="colorblind-rg">Daltonismo (Vermelho-Verde)</option>
+                    <option value="colorblind-by">Daltonismo (Azul-Amarelo)</option>
+                </select>
+                <label>Modo de Visão</label>
+            </div>
+        </li>
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="#!" onclick="logout()">
+                <i class="material-icons">exit_to_app</i>Sair
+            </a>
+        </li>
+    </ul>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div id="app-content" style="display: none;">
+                
+                <!-- Dashboard Page -->
+                <div id="page-dashboard" class="page">
+                    <div class="page-header" data-aos="fade-up">
+                        <h3><i class="material-icons left">dashboard</i>Dashboard</h3>
+                        <p class="page-description">Visão geral dos indicadores hospitalares</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card filter-card z-depth-2" data-aos="fade-up" data-aos-delay="100">
+                                <div class="card-content">
+                                    <span class="card-title">
+                                        <i class="material-icons left">filter_list</i>Filtros
+                                    </span>
+                                    <div class="row">
+                                        <div class="input-field col s12 m3">
+                                            <select id="filtro-unidade">
+                                                <option value="" selected>Todas as Unidades</option>
+                                            </select>
+                                            <label>Unidade</label>
+                                        </div>
+                                        <div class="input-field col s6 m3">
+                                            <input type="number" id="filtro-ano" class="validate" value="2025">
+                                            <label for="filtro-ano">Ano</label>
+                                        </div>
+                                        <div class="input-field col s6 m3">
+                                            <select id="filtro-mes">
+                                                <option value="">Todos os Meses</option>
+                                                <option value="1">Janeiro</option>
+                                                <option value="2">Fevereiro</option>
+                                                <option value="3">Março</option>
+                                                <option value="4">Abril</option>
+                                                <option value="5">Maio</option>
+                                                <option value="6">Junho</option>
+                                                <option value="7">Julho</option>
+                                                <option value="8">Agosto</option>
+                                                <option value="9">Setembro</option>
+                                                <option value="10">Outubro</option>
+                                                <option value="11">Novembro</option>
+                                                <option value="12">Dezembro</option>
+                                            </select>
+                                            <label>Mês</label>
+                                        </div>
+                                        <div class="input-field col s12 m3">
+                                            <button class="btn waves-effect waves-light btn-large gradient-btn" onclick="carregarDashboard()">
+                                                <i class="material-icons left">search</i>Filtrar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="dashboard-header" class="row" style="display: none;" data-aos="fade-up" data-aos-delay="200">
+                        <!-- Header content will be populated by JavaScript -->
+                    </div>
+                    
+                    <div id="dashboard-results" class="row" data-aos="fade-up" data-aos-delay="300">
+                        <div class="col s12">
+                            <div class="card">
+                                <div class="card-content center-align">
+                                    <p class="grey-text">Selecione os filtros e clique em "Filtrar" para visualizar os dados</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lançamento Page -->
+                <div id="page-lancamento" class="page">
+                    <div class="page-header" data-aos="fade-up">
+                        <h3><i class="material-icons left">add_circle</i>Lançamento em Lote</h3>
+                        <p class="page-description">Selecione a competência e preencha os indicadores</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card filter-card z-depth-2" data-aos="fade-up" data-aos-delay="100">
+                                <div class="card-content">
+                                    <span class="card-title">
+                                        <i class="material-icons left">settings</i>Configurações do Lançamento
+                                    </span>
+                                    <div class="row">
+                                        <div class="input-field col s12 m4">
+                                            <select id="form-unidade">
+                                                <option value="" disabled selected>Selecione a Unidade</option>
+                                            </select>
+                                            <label>1. Unidade</label>
+                                        </div>
+                                        <div class="input-field col s6 m3">
+                                            <input id="form-ano" type="number" class="validate" value="2025">
+                                            <label for="form-ano">2. Ano</label>
+                                        </div>
+                                        <div class="input-field col s6 m3">
+                                            <input id="form-mes" type="number" class="validate" min="1" max="12">
+                                            <label for="form-mes">3. Mês (1-12)</label>
+                                        </div>
+                                        <div class="input-field col s12 m2">
+                                            <button class="btn waves-effect waves-light btn-large gradient-btn" onclick="carregarListaDeLancamento()">
+                                                <i class="material-icons left">list</i>Carregar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="lancamento-lista-indicadores" class="row">
+                        <!-- Indicadores will be populated by JavaScript -->
+                    </div>
+                    
+                    <div id="lancamento-botao-salvar" class="row center-align" style="display: none;" data-aos="fade-up">
+                        <div class="col s12">
+                            <button class="btn-large waves-effect waves-light pulse gradient-btn" onclick="salvarTodosLancamentos()">
+                                <i class="material-icons left">save</i>Salvar Todos os Lançamentos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Unidades Page -->
+                <div id="page-adminUnidades" class="page">
+                    <div class="page-header" data-aos="fade-up">
+                        <h3><i class="material-icons left">business</i>Gerenciar Unidades</h3>
+                        <p class="page-description">Administre as unidades hospitalares e suas informações</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card z-depth-2" data-aos="fade-up" data-aos-delay="100">
+                                <div class="card-content">
+                                    <span class="card-title">
+                                        <i class="material-icons left">photo_camera</i>Atualizar Foto da Unidade
+                                    </span>
+                                    <div class="row">
+                                        <div class="input-field col s12 m6">
+                                            <select id="admin-unidade-select">
+                                                <option value="" disabled selected>Carregando unidades...</option>
+                                            </select>
+                                            <label>Selecione a Unidade</label>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                            <input id="admin-unidade-foto-url" type="url" class="validate">
+                                            <label for="admin-unidade-foto-url">URL da Imagem</label>
+                                            <span class="helper-text">Cole o link público da imagem (ex: Google Drive, Imgur)</span>
+                                        </div>
+                                        <div class="col s12 center-align">
+                                            <button class="btn waves-effect waves-light gradient-btn" onclick="salvarUrlDaFoto()">
+                                                <i class="material-icons left">save</i>Salvar Foto da Unidade
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Usuários Page -->
+                <div id="page-adminUsuarios" class="page">
+                    <div class="page-header" data-aos="fade-up">
+                        <h3><i class="material-icons left">people</i>Gerenciar Usuários</h3>
+                        <p class="page-description">Administre usuários e permissões do sistema</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card z-depth-2" data-aos="fade-up" data-aos-delay="100">
+                                <div class="card-content center-align">
+                                    <i class="material-icons large grey-text">construction</i>
+                                    <h5 class="grey-text">Em Desenvolvimento</h5>
+                                    <p class="grey-text">Funcionalidade de gerenciamento de usuários será implementada em breve.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div id="infoModal" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4 id="modal-title"><i class="material-icons left">info</i>Detalhes do Indicador</h4>
+            <div class="row">
+                <div class="col s12">
+                    <div class="card-panel blue-grey lighten-5">
+                        <p><strong>Descrição:</strong></p>
+                        <p id="modal-descricao" class="flow-text"></p>
+                    </div>
+                </div>
+                <div class="col s12 m6">
+                    <div class="card-panel green lighten-5">
+                        <p><strong>Numerador:</strong></p>
+                        <p id="modal-numerador"></p>
+                    </div>
+                </div>
+                <div class="col s12 m6">
+                    <div class="card-panel orange lighten-5">
+                        <p><strong>Denominador:</strong></p>
+                        <p id="modal-denominador"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">
+                <i class="material-icons left">close</i>Fechar
+            </a>
+        </div>
+    </div>
+    
+    <div id="dashboardDetailModal" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4 id="dashboard-modal-title"><i class="material-icons left">analytics</i>Análise do Indicador</h4>
+            <div class="row">
+                <div class="col s12">
+                    <div class="card-panel blue-grey lighten-5">
+                        <p><strong>O que Mede:</strong></p>
+                        <p id="dashboard-modal-descricao" class="flow-text"></p>
+                    </div>
+                </div>
+                <div class="col s12 m6">
+                    <div class="card-panel green lighten-5">
+                        <p><strong>Numerador:</strong></p>
+                        <p id="dashboard-modal-numerador"></p>
+                    </div>
+                </div>
+                <div class="col s12 m6">
+                    <div class="card-panel orange lighten-5">
+                        <p><strong>Denominador:</strong></p>
+                        <p id="dashboard-modal-denominador"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">
+                <i class="material-icons left">close</i>Fechar
+            </a>
+        </div>
+    </div>
+    </div> <!-- End Main App Container -->
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/config-auto.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/lancamento.js"></script>
+    <script src="js/admin.js"></script>
+    
+    <script>
+        // Inicialização simplificada e mais robusta
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🏥 Inicializando aplicação...');
+            
+            try {
+                // Forçar exibição de conteúdo após timeout mínimo
+                setTimeout(() => {
+                    const loadingScreen = document.getElementById('loading-screen');
+                    const loginSection = document.getElementById('login-section');
+                    
+                    if (loadingScreen) {
+                        loadingScreen.style.display = 'none';
+                        console.log('✅ Loading screen escondido');
+                    }
+                    
+                    if (loginSection) {
+                        loginSection.style.display = 'block';
+                        console.log('✅ Tela de login exibida');
+                    }
+                    
+                    // Inicializar Materialize depois
+                    if (typeof M !== 'undefined') {
+                        M.AutoInit();
+                        console.log('✅ Materialize inicializado');
+                    }
+                    
+                    // Inicializar sistema de autenticação
+                    if (typeof AuthManager !== 'undefined') {
+                        window.authManager = new AuthManager();
+                        console.log('✅ Sistema de autenticação inicializado');
+                    } else {
+                        console.error('❌ AuthManager não encontrado');
+                    }
+                    
+                }, 100);
+                
+            } catch (error) {
+                console.error('❌ Erro na inicialização:', error);
+                
+                // Fallback de emergência
+                setTimeout(() => {
+                    document.body.innerHTML = `
+                        <div style="padding: 20px; text-align: center; font-family: Arial;">
+                            <h2>🏥 Gestão de Indicadores Hospitalares</h2>
+                            <p>Erro na inicialização. Recarregue a página.</p>
+                            <button onclick="location.reload()">Recarregar</button>
+                        </div>
+                    `;
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>

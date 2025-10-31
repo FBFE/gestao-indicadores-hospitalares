@@ -1,0 +1,41 @@
+{
+  "name": "gestao-indicadores-frontend",
+  "version": "1.0.0",
+  "description": "Frontend para Sistema de Gestão de Indicadores Hospitalares",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000 --host=localhost",
+    "build": "npm run build:css && npm run minify:js",
+    "build:css": "postcss css/styles.css -o dist/styles.min.css --use autoprefixer cssnano",
+    "minify:js": "uglifyjs js/*.js -o dist/app.min.js --compress --mangle",
+    "test": "echo \"No tests specified\" && exit 0",
+    "deploy": "netlify deploy --prod"
+  },
+  "dependencies": {
+    "materialize-css": "^1.0.0",
+    "aos": "^2.3.4"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "autoprefixer": "^10.4.16",
+    "cssnano": "^6.0.1",
+    "uglify-js": "^3.17.4",
+    "netlify-cli": "^17.0.0"
+  },
+  "keywords": [
+    "hospital",
+    "indicadores",
+    "gestao",
+    "saude",
+    "dashboard"
+  ],
+  "author": "Desenvolvimento Web",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seu-usuario/gestao-indicadores-hospitalares.git"
+  },
+  "homepage": "https://gestao-indicadores.netlify.app"
+}
