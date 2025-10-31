@@ -11,8 +11,7 @@ import os
 import logging
 from functools import wraps
 
-# Importar configurações e modelos
-from config.database import config
+# Importar modelos diretamente
 from models import db, Usuario, Unidade, Indicador, Lancamento
 
 # Configuração de logging
@@ -48,9 +47,15 @@ def create_app(config_name=None):
         else:
             app.config['CORS_ORIGINS'] = cors_origins.split(',')
     else:
-        # Desenvolvimento
-        from config.database import config
-        app.config.from_object(config[config_name or 'development'])
+        # Desenvolvimento - configuração simples
+        app.config['DEBUG'] = True
+        app.config['TESTING'] = False
+        app.config['SECRET_KEY'] = 'dev-secret-key'
+        app.config['JWT_SECRET_KEY'] = 'dev-jwt-secret'
+        app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 3600
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///gestao_indicadores.db'
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        app.config['CORS_ORIGINS'] = ['http://localhost:3000', 'http://127.0.0.1:3000']
     
     # Configurar extensões
     db.init_app(app)
