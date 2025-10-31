@@ -1,0 +1,7 @@
+# Ignorar backend no deploy do frontend
+backend/
+*.py
+requirements*.txt
+__pycache__/
+*.pyc
+.env
