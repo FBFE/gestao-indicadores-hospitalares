@@ -1,0 +1,9 @@
+[build]
+  # Frontend estático - sem build necessário
+  command = ""
+  publish = "."
+  
+[build.environment]
+  # Não instalar dependências Python
+  NETLIFY_USE_NODE = "false"
+  NETLIFY_USE_PYTHON = "false"

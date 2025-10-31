@@ -1,0 +1,7 @@
+# Ignorar arquivos Python - frontend é estático
+requirements.txt
+requirements_minimal.txt
+*.py
+backend/
+__pycache__/
+*.pyc
