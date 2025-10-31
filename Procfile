@@ -1,1 +1,1 @@
-web: cd backend/src && python app_postgresql.py
+web: cd backend/src && python app_simple.py
