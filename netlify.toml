@@ -1,21 +1,11 @@
 # Configurações do Netlify para o Frontend
 [build]
   publish = "frontend"
-  command = "echo 'Deploy estático - sem build necessário'"
-
-[build.environment]
-  NODE_VERSION = "18"
 
 # Proxy para API do backend
 [[redirects]]
   from = "/api/*"
   to = "https://gestao-indicadores-hospitalares-production.up.railway.app/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/auth/*"
-  to = "https://sua-api-railway.up.railway.app/auth/:splat"
   status = 200
   force = true
   
