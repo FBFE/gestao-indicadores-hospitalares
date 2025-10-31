@@ -9,13 +9,12 @@
   status = 200
   force = true
 
-# Headers de segurança relaxados para permitir funcionamento
+# Headers permissivos para permitir funcionamento
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' https: data:; img-src 'self' https: data:; connect-src 'self' https:;"
+    Content-Security-Policy = "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src *; img-src * data: blob:; frame-src *; style-src * 'unsafe-inline';"
     X-Frame-Options = "SAMEORIGIN"
-    X-Content-Type-Options = "nosniff"
   
 # SPA redirect
 [[redirects]]
