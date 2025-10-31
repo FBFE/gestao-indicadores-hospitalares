@@ -28,7 +28,7 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=24)
 jwt = JWTManager(app)
 
 # CORS
-CORS(app, supports_credentials=True, origins=True)
+CORS(app)
 
 # Database
 DATABASE_URL = os.environ.get('DATABASE_URL')
