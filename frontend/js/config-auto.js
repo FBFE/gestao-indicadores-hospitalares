@@ -11,7 +11,7 @@ console.log('🌍 Ambiente detectado:', isProduction ? 'PRODUÇÃO' : 'DESENVOLV
 // Configuração baseada no ambiente
 const API_CONFIG = {
     baseURL: isProduction 
-        ? 'https://SEU-BACKEND-RAILWAY.up.railway.app'  // ⚠️ ATUALIZAR COM SUA URL DO RAILWAY
+        ? 'https://gestao-indicadores-hospitalares-production.up.railway.app'  // ✅ URL DO RAILWAY CONFIGURADA
         : 'http://localhost:5000'  // Desenvolvimento local
 };
 
@@ -21,7 +21,7 @@ console.log('🔗 API URL:', API_CONFIG.baseURL);
 // Para debug - mostrar no console qual config está sendo usada
 if (isProduction) {
     console.log('📡 Usando configuração de PRODUÇÃO');
-    console.log('🚨 LEMBRE-SE: Atualize a URL do Railway no arquivo config-auto.js');
+    console.log('� API Railway: https://gestao-indicadores-hospitalares-production.up.railway.app');
 } else {
     console.log('💻 Usando configuração de DESENVOLVIMENTO');
     console.log('🔧 Certifique-se que o servidor local está rodando na porta 5000');
