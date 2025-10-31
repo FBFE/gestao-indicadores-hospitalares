@@ -1,1 +1,1 @@
-web: cd backend/src && python app_simple.py
+web: cd backend/src && python app_ultra_simple.py
