@@ -1,0 +1,6 @@
+FLASK_ENV=production
+SECRET_KEY=gestao-indicadores-secret-super-strong-2024
+JWT_SECRET_KEY=jwt-secret-key-muito-forte-2024
+DATABASE_URL=${{Postgres.DATABASE_URL}}
+PORT=${{PORT}}
+CORS_ORIGINS=*

@@ -1,0 +1,1 @@
+web: cd backend/src && python app_postgresql.py
