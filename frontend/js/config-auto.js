@@ -27,5 +27,65 @@ if (isProduction) {
     console.log('🔧 Certifique-se que o servidor local está rodando na porta 5000');
 }
 
+// ApiUtils para fazer requisições
+const ApiUtils = {
+    async get(endpoint) {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_CONFIG.baseURL}${endpoint}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                ...(token && { 'Authorization': `Bearer ${token}` })
+            }
+        });
+        return await response.json();
+    },
+
+    async post(endpoint, data) {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_CONFIG.baseURL}${endpoint}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                ...(token && { 'Authorization': `Bearer ${token}` })
+            },
+            body: JSON.stringify(data)
+        });
+        return await response.json();
+    },
+
+    async put(endpoint, data) {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_CONFIG.baseURL}${endpoint}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                ...(token && { 'Authorization': `Bearer ${token}` })
+            },
+            body: JSON.stringify(data)
+        });
+        return await response.json();
+    },
+
+    async delete(endpoint) {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_CONFIG.baseURL}${endpoint}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                ...(token && { 'Authorization': `Bearer ${token}` })
+            }
+        });
+        return await response.json();
+    }
+};
+
+// Configuração completa com ApiUtils
+const APP_CONFIG = {
+    baseURL: API_CONFIG.baseURL,
+    ApiUtils
+};
+
 // Exportar para uso global
 window.API_CONFIG = API_CONFIG;
+window.APP_CONFIG = APP_CONFIG;
